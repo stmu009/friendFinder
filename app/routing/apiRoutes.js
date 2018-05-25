@@ -1,18 +1,33 @@
-
 var friends = require("../data/friends");
 
-module.exports = function(app){ 
-// A GET route with the url /api/friends. This will be used to display a JSON of all possible friends.
+module.exports = function (app) {
+    // A GET route with the url /api/friends. This will be used to display a JSON of all possible friends.
 
-    app.get("/api/friends", function(request, response){
+    app.get("/api/friends", function (request, response) {
         console.log("List all friends");
         response.json(friends)
     })
 
-// A POST routes /api/friends. This will be used to handle incoming survey results. This route will also be used to handle the compatibility logic. 
+    // A POST routes /api/friends. This will be used to handle incoming survey results. This route will also be used to handle the compatibility logic. 
+    app.post('/api/friends', (req, res) => {
+        console.log("friends:", friends);
+        console.log("friends type:", typeof friends);
 
+        // loop through friends and get compatability score
+        friends.forEach(friend => {
+            friend.scores.forEach((questionScore, questionNum) => {
+                console.log("Question Score", questionScore);
+                console.log("index:", questionNum);
+                // get the difference for each score
+                
+            });
+        });
 
-}
+        friends.push(req.body);
+        res.json(friends[0]);
+    });
+
+};
 
 
 
@@ -28,4 +43,3 @@ module.exports = function(app){
 // The closest match will be the user with the least amount of difference.
 // Once you've found the current user's most compatible friend, display the result as a modal pop-up.
 // The modal should display both the name and picture of the closest match.
-
